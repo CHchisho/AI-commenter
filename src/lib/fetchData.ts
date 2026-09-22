@@ -9,10 +9,12 @@ const fetchData = async <T>(
   const json = await response.json();
   if (!response.ok) {
     // kokeile joskus: throw response;
-    const errorJson = json as unknown as ErrorResponse;
-    // console.log('errorJson', errorJson);
-    if (errorJson.message) {
-      throw new Error(errorJson.message);
+    const errorJson = json as unknown as ErrorResponse & {
+      error?: {message?: string};
+    };
+    const message = errorJson.message || errorJson.error?.message;
+    if (message) {
+      throw new Error(message);
     }
     throw new Error(`Error ${response.status} occured`);
   }

@@ -1,17 +1,17 @@
 import express from 'express';
 import { body } from 'express-validator';
 import { validate } from '../../middlewares';
-import { commentPost } from '../controllers/commentController';
+import { thumbnailPost } from '../controllers/thumbnailController';
 
 const router = express.Router();
 
 router
   .route('/')
   .post(
-    body('text').trim().notEmpty().withMessage('text is required').escape(),
-    body('tone').optional().isString().trim().escape(),
+    body('topic').trim().notEmpty().withMessage('topic is required'),
+    body('extraDetails').optional().isString().trim(),
     validate,
-    commentPost
+    thumbnailPost
   );
 
 export default router;

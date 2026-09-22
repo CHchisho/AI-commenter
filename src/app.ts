@@ -5,9 +5,9 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
 
-import {notFound, errorHandler} from './middlewares';
+import { notFound, errorHandler } from './middlewares';
 import api from './api';
-import {MessageResponse} from './types/MessageTypes';
+import { MessageResponse } from './types/MessageTypes';
 
 const app = express();
 
@@ -15,6 +15,7 @@ app.use(morgan('dev'));
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
+app.use('/uploads', express.static('uploads'));
 
 app.get<{}, MessageResponse>('/', (_req, res) => {
   res.json({
